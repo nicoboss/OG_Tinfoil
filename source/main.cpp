@@ -20,6 +20,7 @@
 #include "ui/framework/view.hpp"
 #include "ui/framework/console_options_view.hpp"
 #include "ui/install_view.hpp"
+#include "translate.h"
 
 #include "debug.h"
 #include "error.hpp"
@@ -119,6 +120,8 @@ int main(int argc, char **argv)
 {
     try
     {
+		setCurrentLanguage(Language::Type::en);
+
         Result rc = 0;
         tin::ui::ViewManager& manager = tin::ui::ViewManager::Instance();
 
@@ -135,15 +138,15 @@ int main(int argc, char **argv)
             printf("main: Failed to create tinfoil dirs. Error code: 0x%08x\n", rc);
             return 0;
         }
-        
-        tin::ui::Category titleManCat("Title Management");
+
+        tin::ui::Category titleManCat(translate(Translate::TITLE_MANAGEMENT));
         titleManCat.AddMode(std::move(std::make_unique<tin::ui::InstallNSPMode>()));
         titleManCat.AddMode(std::move(std::make_unique<tin::ui::InstallExtractedNSPMode>()));
         titleManCat.AddMode(std::move(std::make_unique<tin::ui::USBInstallMode>()));
         titleManCat.AddMode(std::move(std::make_unique<tin::ui::NetworkInstallMode>()));
         // TODO: Add uninstall and dump nsp
 
-        tin::ui::Category tikManCat("Ticket Management");
+        tin::ui::Category tikManCat(translate(Translate::TICKET_MANAGEMENT));
         tikManCat.AddMode(std::move(std::make_unique<tin::ui::DeleteCommonTicketMode>()));
         tikManCat.AddMode(std::move(std::make_unique<tin::ui::DeletePersonalizedTicketMode>()));
 
@@ -151,12 +154,12 @@ int main(int argc, char **argv)
 
         auto mainView = std::make_unique<tin::ui::ConsoleOptionsView>();
 
-        mainView->AddEntry("Main Menu", tin::ui::ConsoleEntrySelectType::HEADING, nullptr);
+        mainView->AddEntry(translate(Translate::MAIN_MENU), tin::ui::ConsoleEntrySelectType::HEADING, nullptr);
         mainView->AddEntry("", tin::ui::ConsoleEntrySelectType::NONE, nullptr);
         mainView->AddEntry(titleManCat.m_name, tin::ui::ConsoleEntrySelectType::SELECT, std::bind(&tin::ui::Category::OnSelected, &titleManCat));
-        mainView->AddEntry("Install Information", tin::ui::ConsoleEntrySelectType::SELECT_INACTIVE, nullptr);
-        mainView->AddEntry("Ticket Management", tin::ui::ConsoleEntrySelectType::SELECT, std::bind(&tin::ui::Category::OnSelected, &tikManCat));
-        mainView->AddEntry("Exit", tin::ui::ConsoleEntrySelectType::SELECT, markForExit);
+        mainView->AddEntry(translate(Translate::INSTALL_INFORMATION), tin::ui::ConsoleEntrySelectType::SELECT_INACTIVE, nullptr);
+        mainView->AddEntry(translate(Translate::TICKET_MANAGEMENT), tin::ui::ConsoleEntrySelectType::SELECT, std::bind(&tin::ui::Category::OnSelected, &tikManCat));
+        mainView->AddEntry(translate(Translate::EXIT), tin::ui::ConsoleEntrySelectType::SELECT, markForExit);
         
         manager.PushView(std::move(mainView));
 

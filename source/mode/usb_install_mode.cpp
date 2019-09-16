@@ -15,11 +15,12 @@
 #include "util/usb_util.hpp"
 #include "debug.h"
 #include "error.hpp"
+#include "translate.h"
 
 namespace tin::ui
 {
     USBInstallMode::USBInstallMode() :
-        IMode("USB Install NSP")
+        IMode(translate(Translate::NSP_INSTALL_USB))
     {
 
     }
@@ -48,7 +49,7 @@ namespace tin::ui
         manager.PushView(std::move(view));
 
         Result rc = 0;
-        printf("Waiting for USB to be ready...\n");
+        printf("%s\n", translate(Translate::NSP_INSTALL_USB_WAITING));
 
         consoleUpdate(NULL);
 
@@ -69,7 +70,7 @@ namespace tin::ui
             }   
         }
 
-        printf("USB is ready. Waiting for header...\n");
+        printf("%s\n", translate(Translate::NSP_INSTALL_USB_READY));
         
         consoleUpdate(NULL);
 
@@ -100,7 +101,7 @@ namespace tin::ui
         }
 
         auto selectView = std::make_unique<tin::ui::ConsoleCheckboxView>(std::bind(&USBInstallMode::OnNSPSelected, this), DEFAULT_TITLE, 2);
-        selectView->AddEntry("Select NSP to install", tin::ui::ConsoleEntrySelectType::HEADING, nullptr);
+        selectView->AddEntry(translate(Translate::NSP_SELECT), tin::ui::ConsoleEntrySelectType::HEADING, nullptr);
         selectView->AddEntry("", tin::ui::ConsoleEntrySelectType::NONE, nullptr);
         
         for (auto& nspName : nspNames)
@@ -130,10 +131,10 @@ namespace tin::ui
         }
 
         auto view = std::make_unique<tin::ui::ConsoleOptionsView>(DEFAULT_TITLE);
-        view->AddEntry("Select Destination", tin::ui::ConsoleEntrySelectType::HEADING, nullptr);
+        view->AddEntry(translate(Translate::NSP_INSTALL_SELECT_DESTINATION), tin::ui::ConsoleEntrySelectType::HEADING, nullptr);
         view->AddEntry("", tin::ui::ConsoleEntrySelectType::NONE, nullptr);
-        view->AddEntry("SD Card", tin::ui::ConsoleEntrySelectType::SELECT, std::bind(&USBInstallMode::OnDestinationSelected, this));
-        view->AddEntry("NAND", tin::ui::ConsoleEntrySelectType::SELECT, std::bind(&USBInstallMode::OnDestinationSelected, this));
+        view->AddEntry(translate(Translate::SDCARD), tin::ui::ConsoleEntrySelectType::SELECT, std::bind(&USBInstallMode::OnDestinationSelected, this));
+        view->AddEntry(translate(Translate::NAND), tin::ui::ConsoleEntrySelectType::SELECT, std::bind(&USBInstallMode::OnDestinationSelected, this));
         manager.PushView(std::move(view));
     }
 
@@ -150,7 +151,7 @@ namespace tin::ui
         auto destStr = prevView->GetSelectedOptionValue()->GetText();
         m_destStorageId = FsStorageId_SdCard;
 
-        if (destStr == "NAND")
+        if (destStr == translate(Translate::NAND))
         {
             m_destStorageId = FsStorageId_NandUser;
         }
@@ -162,10 +163,10 @@ namespace tin::ui
         {
             tin::install::nsp::USBNSP usbNSP(nspName);
 
-            printf("Installing from %s\n", nspName.c_str());
+            printf("%s %s\n", translate(Translate::NSP_INSTALL_FROM), nspName.c_str());
             tin::install::nsp::RemoteNSPInstall install(m_destStorageId, false, &usbNSP);
 
-            printf("Preparing install...\n");
+            printf("%s\n", translate(Translate::NSP_INSTALL_PREPARING));
             install.Prepare();
             LOG_DEBUG("Pre Install Records: \n");
             install.DebugPrintInstallData();

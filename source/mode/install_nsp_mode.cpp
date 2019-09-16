@@ -9,11 +9,12 @@
 #include "util/title_util.hpp"
 #include "util/graphics_util.hpp"
 #include "error.hpp"
+#include "translate.h"
 
 namespace tin::ui
 {
     InstallNSPMode::InstallNSPMode() :
-        IMode("Install NSP")
+        IMode(translate(Translate::NSP_INSTALL))
     {
 
     }
@@ -22,14 +23,14 @@ namespace tin::ui
     {
         tin::ui::ViewManager& manager = tin::ui::ViewManager::Instance();
         auto view = std::make_unique<tin::ui::ConsoleOptionsView>();
-        view->AddEntry("Select NSP", tin::ui::ConsoleEntrySelectType::HEADING, nullptr);
+        view->AddEntry(translate(Translate::NSP_SELECT), tin::ui::ConsoleEntrySelectType::HEADING, nullptr);
         view->AddEntry("", tin::ui::ConsoleEntrySelectType::NONE, nullptr);
 
         auto nspList = tin::util::GetNSPList();
 
         if (nspList.size() > 0)
         {
-            view->AddEntry("Install All", ConsoleEntrySelectType::SELECT, std::bind(&InstallNSPMode::OnNSPSelected, this));
+            view->AddEntry(translate(Translate::NSP_INSTALL_ALL), ConsoleEntrySelectType::SELECT, std::bind(&InstallNSPMode::OnNSPSelected, this));
 
             for (unsigned int i = 0; i < nspList.size(); i++)
             {
@@ -55,10 +56,10 @@ namespace tin::ui
 
         // Prepare the next view
         auto view = std::make_unique<tin::ui::ConsoleOptionsView>();
-        view->AddEntry("Select Destination", tin::ui::ConsoleEntrySelectType::HEADING, nullptr);
+        view->AddEntry(translate(Translate::NSP_INSTALL_SELECT_DESTINATION), tin::ui::ConsoleEntrySelectType::HEADING, nullptr);
         view->AddEntry("", tin::ui::ConsoleEntrySelectType::NONE, nullptr);
-        view->AddEntry("SD Card", tin::ui::ConsoleEntrySelectType::SELECT, std::bind(&InstallNSPMode::OnDestinationSelected, this));
-        view->AddEntry("NAND", tin::ui::ConsoleEntrySelectType::SELECT, std::bind(&InstallNSPMode::OnDestinationSelected, this));
+        view->AddEntry(translate(Translate::SDCARD), tin::ui::ConsoleEntrySelectType::SELECT, std::bind(&InstallNSPMode::OnDestinationSelected, this));
+        view->AddEntry(translate(Translate::NAND), tin::ui::ConsoleEntrySelectType::SELECT, std::bind(&InstallNSPMode::OnDestinationSelected, this));
         manager.PushView(std::move(view));
     }
 
@@ -76,16 +77,16 @@ namespace tin::ui
         auto destStr = prevView->GetSelectedOptionValue()->GetText();
         m_destStorageId = FsStorageId_SdCard;
 
-        if (destStr == "NAND")
+        if (destStr == translate(Translate::NAND))
         {
             m_destStorageId = FsStorageId_NandUser;
         }
 
         auto view = std::make_unique<tin::ui::ConsoleOptionsView>();
-        view->AddEntry("Ignore Required Firmware Version", tin::ui::ConsoleEntrySelectType::HEADING, nullptr);
+        view->AddEntry(translate(Translate::IGNORE_REQUIRED_FW_VERSION), tin::ui::ConsoleEntrySelectType::HEADING, nullptr);
         view->AddEntry("", tin::ui::ConsoleEntrySelectType::NONE, nullptr);
-        view->AddEntry("No", tin::ui::ConsoleEntrySelectType::SELECT, std::bind(&InstallNSPMode::OnIgnoreReqFirmVersionSelected, this));
-        view->AddEntry("Yes", tin::ui::ConsoleEntrySelectType::SELECT, std::bind(&InstallNSPMode::OnIgnoreReqFirmVersionSelected, this));
+        view->AddEntry(translate(Translate::NO), tin::ui::ConsoleEntrySelectType::SELECT, std::bind(&InstallNSPMode::OnIgnoreReqFirmVersionSelected, this));
+        view->AddEntry(translate(Translate::YES), tin::ui::ConsoleEntrySelectType::SELECT, std::bind(&InstallNSPMode::OnIgnoreReqFirmVersionSelected, this));
         manager.PushView(std::move(view));
     }
 
@@ -101,10 +102,10 @@ namespace tin::ui
         }
 
         auto optStr = prevView->GetSelectedOptionValue()->GetText();
-        m_ignoreReqFirmVersion = (optStr == "Yes");
+        m_ignoreReqFirmVersion = (optStr == translate(Translate::YES));
         std::vector<std::string> installList;
 
-        if (m_name == "Install All")
+        if (m_name == translate(Translate::NSP_INSTALL_ALL))
         {
             installList = tin::util::GetNSPList();
         }
@@ -128,13 +129,13 @@ namespace tin::ui
                 tin::install::nsp::SimpleFileSystem simpleFS(fileSystem, "/", path + "/");
                 tin::install::nsp::NSPInstallTask task(simpleFS, m_destStorageId, m_ignoreReqFirmVersion);
 
-                printf("Preparing install...\n");
+                printf("%s\n", translate(Translate::NSP_INSTALL_PREPARING));
                 task.Prepare();
                 LOG_DEBUG("Pre Install Records: \n");
                 task.DebugPrintInstallData();
 
                 std::stringstream ss;
-                ss << "Installing " << tin::util::GetTitleName(task.GetTitleId(), task.GetContentMetaType()) << " (" << (i + 1) << "/" << installList.size() << ")";
+                ss << translate(Translate::NSP_INSTALLING) << " " << tin::util::GetTitleName(task.GetTitleId(), task.GetContentMetaType()) << " (" << (i + 1) << "/" << installList.size() << ")";
                 manager.m_printConsole->flags |= CONSOLE_COLOR_BOLD;
                 tin::util::PrintTextCentred(ss.str());
                 manager.m_printConsole->flags &= ~CONSOLE_COLOR_BOLD;
@@ -145,7 +146,7 @@ namespace tin::ui
             }
             catch (std::exception& e)
             {
-                printf("Failed to install NSP!\n");
+                printf("%s\n", translate(Translate::NSP_INSTALL_FAILED));
                 LOG_DEBUG("Failed to install NSP");
                 LOG_DEBUG("%s", e.what());
                 fprintf(stdout, "%s", e.what());
@@ -153,6 +154,6 @@ namespace tin::ui
             }
         }
 
-        printf("Done!\n\nPress (B) to return.\n");
+        printf("%s\n\n%s\n", translate(Translate::DONE), translate(Translate::PRESS_B_RETURN));
     }
 }
