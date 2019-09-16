@@ -6,6 +6,8 @@
 #include "error.hpp"
 #include "translate.h"
 
+#define OPTIONS_VIEW_PAGE_SIZE 42
+
 namespace tin::ui
 {
     // TextOptionValue
@@ -126,6 +128,10 @@ namespace tin::ui
             this->MoveCursor(1);
         else if (keys & KEY_UP)
             this->MoveCursor(-1);
+		else if (keys & KEY_ZL)
+			this->MoveCursor(-OPTIONS_VIEW_PAGE_SIZE);
+		else if (keys & KEY_ZR)
+			this->MoveCursor(OPTIONS_VIEW_PAGE_SIZE);
         else if (keys & KEY_A)
         {
             ConsoleEntry* consoleEntry = m_consoleEntries.at(m_cursorPos).get();
@@ -160,7 +166,7 @@ namespace tin::ui
 
     void ConsoleOptionsView::MoveCursor(signed char off)
     {
-        if (off != -1 && off != 1)
+        if (off != -1 && off != 1 && off != OPTIONS_VIEW_PAGE_SIZE && off != -OPTIONS_VIEW_PAGE_SIZE)
             return;
 
         this->ClearCursor();
@@ -184,7 +190,17 @@ namespace tin::ui
             }
         }
 
-        this->DisplayCursor();
+		if (m_cursorPos >= m_offset + OPTIONS_VIEW_PAGE_SIZE)
+		{
+			m_offset = m_cursorPos - OPTIONS_VIEW_PAGE_SIZE + 1;
+		}
+
+		if (m_cursorPos < m_offset)
+		{
+			m_offset = m_cursorPos;
+		}
+
+		this->DisplayAll();
     }
 
     void ConsoleOptionsView::DisplayAll()
@@ -197,33 +213,41 @@ namespace tin::ui
         tin::util::PrintTextCentred(m_title);
         console->flags &= ~CONSOLE_COLOR_BOLD;
 
-        // Print the entries
-        for (auto& entry : m_consoleEntries)
-        {
-            char optionValueText[78] = {0};
-            strncpy(optionValueText, entry->optionValue->GetText().c_str(), 78-1);
+		if (m_consoleEntries.size())
+		{
+			if (m_offset >= m_consoleEntries.size())
+			{
+				m_offset = m_consoleEntries.size() - 1;
+			}
+			// Print the entries
+			for (unsigned int i = 0; i < OPTIONS_VIEW_PAGE_SIZE && m_offset + i < m_consoleEntries.size(); i++)
+			{
+				auto& entry = m_consoleEntries[m_offset + i];
+				char optionValueText[78] = { 0 };
+				strncpy(optionValueText, entry->optionValue->GetText().c_str(), 78 - 1);
 
-            switch (entry->selectType)
-            {
-                case ConsoleEntrySelectType::HEADING:
-                    console->flags |= CONSOLE_COLOR_BOLD;
-                    printf("%s\n", optionValueText);
-                    console->flags &= ~CONSOLE_COLOR_BOLD;
-                    break;
+				switch (entry->selectType)
+				{
+				case ConsoleEntrySelectType::HEADING:
+					console->flags |= CONSOLE_COLOR_BOLD;
+					printf("%s\n", optionValueText);
+					console->flags &= ~CONSOLE_COLOR_BOLD;
+					break;
 
-                case ConsoleEntrySelectType::SELECT_INACTIVE:
-                    console->flags |= CONSOLE_COLOR_FAINT;
-                    printf(" %s%s\n", PaddingAfterCursor(), optionValueText);
-                    console->flags &= ~CONSOLE_COLOR_FAINT;
-                    break;
+				case ConsoleEntrySelectType::SELECT_INACTIVE:
+					console->flags |= CONSOLE_COLOR_FAINT;
+					printf(" %s%s\n", PaddingAfterCursor(), optionValueText);
+					console->flags &= ~CONSOLE_COLOR_FAINT;
+					break;
 
-                case ConsoleEntrySelectType::SELECT:
-                    printf(" %s%s\n", PaddingAfterCursor(), optionValueText);
-                    break;
+				case ConsoleEntrySelectType::SELECT:
+					printf(" %s%s\n", PaddingAfterCursor(), optionValueText);
+					break;
 
-                default:
-                    printf("\n");
-            }
+				default:
+					printf("\n");
+				}
+			}
         }
 
         this->DisplayCursor();
@@ -233,12 +257,12 @@ namespace tin::ui
     {
         auto console = ViewManager::Instance().m_printConsole;
         console->cursorX = 0;
-        console->cursorY = m_cursorPos + 2;
+        console->cursorY = (m_cursorPos - m_offset) + 2;
         console->flags |= CONSOLE_COLOR_BOLD;
         printf("%s> ", CONSOLE_CYAN);
         console->flags &= ~CONSOLE_COLOR_BOLD;
         console->cursorX = 0;
-        console->cursorY = m_cursorPos + 3;
+        console->cursorY = (m_cursorPos - m_offset) + 3;
         printf("%s", CONSOLE_RESET);
     }
 
@@ -246,7 +270,7 @@ namespace tin::ui
     {
         auto console = ViewManager::Instance().m_printConsole;
         console->cursorX = 0;
-        console->cursorY = m_cursorPos + 2;
+        console->cursorY = (m_cursorPos - m_offset) + 2;
         printf("  ");
     }
 }

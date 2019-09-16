@@ -84,6 +84,7 @@ namespace tin::ui
 
             std::vector<std::unique_ptr<ConsoleEntry>> m_consoleEntries;
             unsigned int m_cursorPos = 0;
+			unsigned int m_offset = 0;
 
             virtual const char* PaddingAfterCursor() const
             {
