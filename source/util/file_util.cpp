@@ -9,7 +9,7 @@
 
 namespace tin::util
 {
-    nx::ncm::ContentRecord CreateNSPCNMTContentRecord(std::string nspPath)
+    nx::ncm::ContentRecord CreateNSPCNMTContentRecord(const std::string& nspPath)
     {
         // Open filesystem
         nx::fs::IFileSystem fileSystem;
@@ -46,7 +46,7 @@ namespace tin::util
     }
 
     // NOTE: As of 7.0.0, this will only work with installed cnmt nca paths
-    nx::ncm::ContentMeta GetContentMetaFromNCA(std::string ncaPath)
+    nx::ncm::ContentMeta GetContentMetaFromNCA(const std::string& ncaPath)
     {
         // Create the cnmt filesystem
         nx::fs::IFileSystem cnmtNCAFileSystem;

@@ -19,6 +19,7 @@
 #include "debug.h"
 #include "error.hpp"
 #include "translate.h"
+#include "options.h"
 
 namespace tin::ui
 {
@@ -268,7 +269,7 @@ namespace tin::ui
             tin::install::nsp::HTTPNSP httpNSP(url);
 
             printf("%s %s\n", translate(Translate::NSP_INSTALL_FROM), url.c_str());
-            tin::install::nsp::RemoteNSPInstall install(m_destStorageId, false, &httpNSP);
+            tin::install::nsp::RemoteNSPInstall install(m_destStorageId, Options().GetIgnoreFirmwareVersion(), &httpNSP);
 
             printf("%s\n", translate(Translate::NSP_INSTALL_PREPARING));
             install.Prepare();

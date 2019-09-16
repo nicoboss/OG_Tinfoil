@@ -120,7 +120,7 @@ int main(int argc, char **argv)
 {
     try
     {
-		setCurrentLanguage(Language::Type::en);
+		setCurrentLanguage(Language::Type::None);
 
         Result rc = 0;
         tin::ui::ViewManager& manager = tin::ui::ViewManager::Instance();
