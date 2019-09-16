@@ -15,7 +15,7 @@ namespace tin::ui
     struct IOptionValue
     {
         public:
-            virtual std::string GetText() = 0;
+            virtual const std::string& GetText() = 0;
     };
 
     struct TextOptionValue : public IOptionValue
@@ -24,25 +24,27 @@ namespace tin::ui
 
         TextOptionValue(std::string name);
 
-        std::string GetText() override;
+		const std::string& GetText() override;
     };
 
     struct TitleIdOptionValue : public IOptionValue
     {
         u64 titleId;
+		std::string name;
 
         TitleIdOptionValue(u64 titleId);
 
-        std::string GetText() override;
+        const std::string& GetText() override;
     };
 
     struct RightsIdOptionValue : public IOptionValue
     {
         RightsId rightsId;
+		std::string name;
 
         RightsIdOptionValue(RightsId rightsId);
 
-        std::string GetText() override;
+		const std::string& GetText() override;
     };
 
     enum class ConsoleEntrySelectType

@@ -4,6 +4,7 @@
 #include "util/graphics_util.hpp"
 #include "util/title_util.hpp"
 #include "error.hpp"
+#include "translate.h"
 
 namespace tin::ui
 {
@@ -15,7 +16,7 @@ namespace tin::ui
 
     }
 
-    std::string TextOptionValue::GetText()
+    const std::string& TextOptionValue::GetText()
     {
         return this->name;
     }
@@ -30,9 +31,22 @@ namespace tin::ui
 
     }
 
-    std::string TitleIdOptionValue::GetText()
+    const std::string& TitleIdOptionValue::GetText()
     {
-        return ""; //TODO
+		if (!name.size())
+		{
+			name = tin::util::GetBaseTitleName(titleId);
+
+			if (!name.size())
+			{
+				name = translate(Translate::UNKNOWN);
+
+				char titleIdStr[34] = { 0 };
+				snprintf(titleIdStr, 34 - 1, "%016lx", titleId);
+				name += " - " + std::string(titleIdStr);
+			}
+		}
+        return name;
     }
 
     // End TitleIdOptionValue
@@ -45,26 +59,29 @@ namespace tin::ui
 
     }
 
-    std::string RightsIdOptionValue::GetText()
+	const std::string& RightsIdOptionValue::GetText()
     {
-        u64 titleId = tin::util::GetRightsIdTid(this->rightsId);
-        u64 keyGen = tin::util::GetRightsIdKeyGen(this->rightsId);
-        std::string titleName = tin::util::GetBaseTitleName(titleId);
+		if (name.length() == 0)
+		{
+			u64 titleId = tin::util::GetRightsIdTid(this->rightsId);
+			u64 keyGen = tin::util::GetRightsIdKeyGen(this->rightsId);
+			name = tin::util::GetBaseTitleName(titleId);
 
-        if (titleName.empty() || titleName == "Unknown")
-        {
-            try
-            {
-                titleName = tin::util::GetBaseTitleName(titleId ^ 0x800);
-            }
-            catch (...) {}
-        }
+			if (name.empty() || name == "Unknown")
+			{
+				try
+				{
+					name = tin::util::GetBaseTitleName(titleId ^ 0x800);
+				}
+				catch (...) {}
+			}
 
-        char rightsIdStr[34] = {0};
-        snprintf(rightsIdStr, 34-1, "%016lx%016lx", titleId, keyGen);
-        titleName += " - " + std::string(rightsIdStr);
+			char rightsIdStr[34] = { 0 };
+			snprintf(rightsIdStr, 34 - 1, "%016lx%016lx", titleId, keyGen);
+			name += " - " + std::string(rightsIdStr);
+		}
 
-        return titleName;
+        return name;
     }
 
     // End RightsIdOptionValue

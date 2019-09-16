@@ -25,6 +25,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -33,6 +34,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "ar": {
@@ -61,6 +65,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -69,6 +74,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "cs": {
@@ -97,6 +105,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -105,6 +114,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "da": {
@@ -133,6 +145,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -141,6 +154,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "de": {
@@ -169,6 +185,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -177,6 +194,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "el": {
@@ -205,6 +225,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -213,6 +234,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "en": {
@@ -241,6 +265,7 @@
         "NSP_SELECT": "Select NSP to install",
         "PRESS_B_CANCEL": "Press B to cancel",
         "PRESS_B_RETURN": "Press (B) to return.",
+        "RESET_REQUIRED_VERSION": "Reset Required Version",
         "SDCARD": "SD Card",
         "SWITCH_IP_IS": "Switch IP is",
         "TICKET_COMMON_DELETE": "Delete Common Ticket",
@@ -249,6 +274,9 @@
         "TICKET_PERSONAL_DELETE": "Delete Personalized Ticket",
         "TICKET_PERSONAL_DELETE_SUCCESS": "Deleted personalized ticket successfully!",
         "TITLE_MANAGEMENT": "Title Management",
+        "TITLE_RESET_REQ": "Reset Required Title Version",
+        "TITLE_RESET_REQ_VER_SUCCESS": "Succesfully reset the required title version",
+        "UNKNOWN": "Unknown",
         "YES": "Yes"
     },
     "es": {
@@ -277,6 +305,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -285,6 +314,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "es-AR": {
@@ -313,6 +345,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -321,6 +354,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "es-CL": {
@@ -349,6 +385,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -357,6 +394,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "es-CO": {
@@ -385,6 +425,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -393,6 +434,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "es-MX": {
@@ -421,6 +465,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -429,6 +474,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "es-PE": {
@@ -457,6 +505,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -465,6 +514,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "es-US": {
@@ -493,6 +545,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -501,6 +554,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "fa": {
@@ -529,6 +585,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -537,6 +594,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "fi": {
@@ -565,6 +625,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -573,6 +634,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "fr": {
@@ -601,6 +665,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -609,6 +674,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "fr-BE": {
@@ -637,6 +705,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -645,6 +714,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "fr-CA": {
@@ -673,6 +745,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -681,6 +754,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "he": {
@@ -709,6 +785,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -717,6 +794,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "hi": {
@@ -745,6 +825,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -753,6 +834,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "hr": {
@@ -781,6 +865,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -789,6 +874,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "hu": {
@@ -817,6 +905,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -825,6 +914,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "id": {
@@ -853,6 +945,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -861,6 +954,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "it": {
@@ -889,6 +985,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -897,6 +994,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "ja": {
@@ -925,6 +1025,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -933,6 +1034,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "ko": {
@@ -961,6 +1065,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -969,6 +1074,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "nl": {
@@ -997,6 +1105,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -1005,6 +1114,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "no": {
@@ -1033,6 +1145,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -1041,6 +1154,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "pl": {
@@ -1069,6 +1185,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -1077,6 +1194,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "pt": {
@@ -1105,6 +1225,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -1113,6 +1234,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "pt-BR": {
@@ -1141,6 +1265,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -1149,6 +1274,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "ru": {
@@ -1177,6 +1305,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -1185,6 +1314,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "sv": {
@@ -1213,6 +1345,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -1221,6 +1354,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "tl": {
@@ -1249,6 +1385,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -1257,6 +1394,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "tr": {
@@ -1285,6 +1425,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -1293,6 +1434,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "uk": {
@@ -1321,6 +1465,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -1329,6 +1474,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "vi": {
@@ -1357,6 +1505,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -1365,6 +1514,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     },
     "zh": {
@@ -1393,6 +1545,7 @@
         "NSP_SELECT": null,
         "PRESS_B_CANCEL": null,
         "PRESS_B_RETURN": null,
+        "RESET_REQUIRED_VERSION": null,
         "SDCARD": null,
         "SWITCH_IP_IS": null,
         "TICKET_COMMON_DELETE": null,
@@ -1401,6 +1554,9 @@
         "TICKET_PERSONAL_DELETE": null,
         "TICKET_PERSONAL_DELETE_SUCCESS": null,
         "TITLE_MANAGEMENT": null,
+        "TITLE_RESET_REQ": null,
+        "TITLE_RESET_REQ_VER_SUCCESS": null,
+        "UNKNOWN": null,
         "YES": null
     }
 }

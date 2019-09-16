@@ -17,6 +17,7 @@
 #include "mode/network_install_mode.hpp"
 #include "mode/usb_install_mode.hpp"
 #include "mode/verify_nsp_mode.hpp"
+#include "mode/reset_required_version.hpp"
 #include "ui/framework/view.hpp"
 #include "ui/framework/console_options_view.hpp"
 #include "ui/install_view.hpp"
@@ -144,6 +145,7 @@ int main(int argc, char **argv)
         titleManCat.AddMode(std::move(std::make_unique<tin::ui::InstallExtractedNSPMode>()));
         titleManCat.AddMode(std::move(std::make_unique<tin::ui::USBInstallMode>()));
         titleManCat.AddMode(std::move(std::make_unique<tin::ui::NetworkInstallMode>()));
+		titleManCat.AddMode(std::move(std::make_unique<tin::ui::ResetRequiredVersionMode>()));
         // TODO: Add uninstall and dump nsp
 
         tin::ui::Category tikManCat(translate(Translate::TICKET_MANAGEMENT));
