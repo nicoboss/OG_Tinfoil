@@ -144,6 +144,8 @@ namespace tin::ui
                 hidScanInput();
                 u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
 
+                consoleUpdate(NULL);
+
                 if (kDown & KEY_B)
                 {
                     canceled = true;

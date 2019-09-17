@@ -1,6 +1,7 @@
 #include "mode/usb_install_mode.hpp"
 
 #include <switch.h>
+
 #include <exception>
 #include <sstream>
 #include <stdlib.h>
@@ -51,7 +52,6 @@ namespace tin::ui
 
         Result rc = 0;
         printf("%s\n", translate(Translate::NSP_INSTALL_USB_WAITING));
-
         consoleUpdate(NULL);
 
         while (true)
@@ -67,12 +67,11 @@ namespace tin::ui
             else if ((rc & 0x3FFFFF) != 0xEA01)
             {
                 // Timeouts are okay, we just want to allow users to escape at this point
-                THROW_FORMAT("Failed to wait for USB to be ready\n"); 
-            }   
+                THROW_FORMAT("Failed to wait for USB to be ready\n");
+            }
         }
 
         printf("%s\n", translate(Translate::NSP_INSTALL_USB_READY));
-        
         consoleUpdate(NULL);
 
         TUSHeader header;
