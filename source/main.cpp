@@ -20,7 +20,6 @@
 #include "mode/reset_required_version.hpp"
 #include "ui/framework/view.hpp"
 #include "ui/framework/console_options_view.hpp"
-#include "ui/install_view.hpp"
 #include "translate.h"
 
 #include "debug.h"
