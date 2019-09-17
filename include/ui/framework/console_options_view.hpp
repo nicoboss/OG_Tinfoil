@@ -24,13 +24,13 @@ namespace tin::ui
 
         TextOptionValue(std::string name);
 
-		const std::string& GetText() override;
+        const std::string& GetText() override;
     };
 
     struct TitleIdOptionValue : public IOptionValue
     {
         u64 titleId;
-		std::string name;
+        std::string name;
 
         TitleIdOptionValue(u64 titleId);
 
@@ -40,11 +40,11 @@ namespace tin::ui
     struct RightsIdOptionValue : public IOptionValue
     {
         RightsId rightsId;
-		std::string name;
+        std::string name;
 
         RightsIdOptionValue(RightsId rightsId);
 
-		const std::string& GetText() override;
+        const std::string& GetText() override;
     };
 
     enum class ConsoleEntrySelectType
@@ -84,7 +84,7 @@ namespace tin::ui
 
             std::vector<std::unique_ptr<ConsoleEntry>> m_consoleEntries;
             unsigned int m_cursorPos = 0;
-			unsigned int m_offset = 0;
+            unsigned int m_offset = 0;
 
             virtual const char* PaddingAfterCursor() const
             {

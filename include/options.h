@@ -6,18 +6,18 @@
 class OptionsContext
 {
 public:
-	OptionsContext();
-	virtual ~OptionsContext();
+    OptionsContext();
+    virtual ~OptionsContext();
 
-	bool Load();
-	bool Save();
+    bool Load();
+    bool Save();
 
-	const bool GetIgnoreFirmwareVersion() const { return m_ignoreFirmwareVersion; }
-	const Language& GetLanguage() const { return m_language; }
+    const bool GetIgnoreFirmwareVersion() const { return m_ignoreFirmwareVersion; }
+    const Language& GetLanguage() const { return m_language; }
 protected:
 
-	bool m_ignoreFirmwareVersion;
-	Language m_language;
+    bool m_ignoreFirmwareVersion;
+    Language m_language;
 };
 
 const OptionsContext& Options();

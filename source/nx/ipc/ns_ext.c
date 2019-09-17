@@ -412,17 +412,17 @@ Result nsBeginInstallApplication(u64 tid, u32 unk, u8 storageId) {
         u64 magic;
         u64 cmd_id;
         u32 storageId;
-		u32 unk;
-		u64 tid;
+        u32 unk;
+        u64 tid;
     } *raw;
 
     raw = ipcPrepareHeader(&c, sizeof(*raw));
 
     raw->magic = SFCI_MAGIC;
     raw->cmd_id = 26;
-	raw->storageId = storageId;
+    raw->storageId = storageId;
     raw->unk = unk;
-	raw->tid = tid;
+    raw->tid = tid;
 
     Result rc = serviceIpcDispatch(&g_nsAppManSrv);
 

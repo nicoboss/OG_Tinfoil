@@ -64,7 +64,7 @@ namespace tin::util
 
     size_t USBWrite(const void* in, size_t len)
     {
-    	const u8 *bufptr = (const u8 *)in;
+        const u8 *bufptr = (const u8 *)in;
         size_t cursize = len;
         size_t tmpsize = 0;
 

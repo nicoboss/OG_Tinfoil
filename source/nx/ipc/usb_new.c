@@ -336,7 +336,7 @@ Result usbDsParseReportData(UsbDsReportData *reportdata, u32 urbId, u32 *request
     if (pos == count) return MAKERESULT(Module_Libnx, LibnxError_NotFound);
 
     switch(entry->urb_status) {
-	    case 0x3:
+        case 0x3:
             rc = 0;
         break;
 

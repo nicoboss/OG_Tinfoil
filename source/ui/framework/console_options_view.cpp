@@ -35,19 +35,19 @@ namespace tin::ui
 
     const std::string& TitleIdOptionValue::GetText()
     {
-		if (!name.size())
-		{
-			name = tin::util::GetBaseTitleName(titleId);
+        if (!name.size())
+        {
+            name = tin::util::GetBaseTitleName(titleId);
 
-			if (!name.size())
-			{
-				name = translate(Translate::UNKNOWN);
+            if (!name.size())
+            {
+                name = translate(Translate::UNKNOWN);
 
-				char titleIdStr[34] = { 0 };
-				snprintf(titleIdStr, 34 - 1, "%016lx", titleId);
-				name += " - " + std::string(titleIdStr);
-			}
-		}
+                char titleIdStr[34] = { 0 };
+                snprintf(titleIdStr, 34 - 1, "%016lx", titleId);
+                name += " - " + std::string(titleIdStr);
+            }
+        }
         return name;
     }
 
@@ -61,27 +61,27 @@ namespace tin::ui
 
     }
 
-	const std::string& RightsIdOptionValue::GetText()
+    const std::string& RightsIdOptionValue::GetText()
     {
-		if (name.length() == 0)
-		{
-			u64 titleId = tin::util::GetRightsIdTid(this->rightsId);
-			u64 keyGen = tin::util::GetRightsIdKeyGen(this->rightsId);
-			name = tin::util::GetBaseTitleName(titleId);
+        if (name.length() == 0)
+        {
+            u64 titleId = tin::util::GetRightsIdTid(this->rightsId);
+            u64 keyGen = tin::util::GetRightsIdKeyGen(this->rightsId);
+            name = tin::util::GetBaseTitleName(titleId);
 
-			if (name.empty() || name == "Unknown")
-			{
-				try
-				{
-					name = tin::util::GetBaseTitleName(titleId ^ 0x800);
-				}
-				catch (...) {}
-			}
+            if (name.empty() || name == "Unknown")
+            {
+                try
+                {
+                    name = tin::util::GetBaseTitleName(titleId ^ 0x800);
+                }
+                catch (...) {}
+            }
 
-			char rightsIdStr[34] = { 0 };
-			snprintf(rightsIdStr, 34 - 1, "%016lx%016lx", titleId, keyGen);
-			name += " - " + std::string(rightsIdStr);
-		}
+            char rightsIdStr[34] = { 0 };
+            snprintf(rightsIdStr, 34 - 1, "%016lx%016lx", titleId, keyGen);
+            name += " - " + std::string(rightsIdStr);
+        }
 
         return name;
     }
@@ -128,10 +128,10 @@ namespace tin::ui
             this->MoveCursor(1);
         else if (keys & KEY_UP)
             this->MoveCursor(-1);
-		else if (keys & KEY_ZL)
-			this->MoveCursor(-OPTIONS_VIEW_PAGE_SIZE);
-		else if (keys & KEY_ZR)
-			this->MoveCursor(OPTIONS_VIEW_PAGE_SIZE);
+        else if (keys & KEY_ZL)
+            this->MoveCursor(-OPTIONS_VIEW_PAGE_SIZE);
+        else if (keys & KEY_ZR)
+            this->MoveCursor(OPTIONS_VIEW_PAGE_SIZE);
         else if (keys & KEY_A)
         {
             ConsoleEntry* consoleEntry = m_consoleEntries.at(m_cursorPos).get();
@@ -190,17 +190,17 @@ namespace tin::ui
             }
         }
 
-		if (m_cursorPos >= m_offset + OPTIONS_VIEW_PAGE_SIZE)
-		{
-			m_offset = m_cursorPos - OPTIONS_VIEW_PAGE_SIZE + 1;
-		}
+        if (m_cursorPos >= m_offset + OPTIONS_VIEW_PAGE_SIZE)
+        {
+            m_offset = m_cursorPos - OPTIONS_VIEW_PAGE_SIZE + 1;
+        }
 
-		if (m_cursorPos < m_offset)
-		{
-			m_offset = m_cursorPos;
-		}
+        if (m_cursorPos < m_offset)
+        {
+            m_offset = m_cursorPos;
+        }
 
-		this->DisplayAll();
+        this->DisplayAll();
     }
 
     void ConsoleOptionsView::DisplayAll()
@@ -213,41 +213,41 @@ namespace tin::ui
         tin::util::PrintTextCentred(m_title);
         console->flags &= ~CONSOLE_COLOR_BOLD;
 
-		if (m_consoleEntries.size())
-		{
-			if (m_offset >= m_consoleEntries.size())
-			{
-				m_offset = m_consoleEntries.size() - 1;
-			}
-			// Print the entries
-			for (unsigned int i = 0; i < OPTIONS_VIEW_PAGE_SIZE && m_offset + i < m_consoleEntries.size(); i++)
-			{
-				auto& entry = m_consoleEntries[m_offset + i];
-				char optionValueText[78] = { 0 };
-				strncpy(optionValueText, entry->optionValue->GetText().c_str(), 78 - 1);
+        if (m_consoleEntries.size())
+        {
+            if (m_offset >= m_consoleEntries.size())
+            {
+                m_offset = m_consoleEntries.size() - 1;
+            }
+            // Print the entries
+            for (unsigned int i = 0; i < OPTIONS_VIEW_PAGE_SIZE && m_offset + i < m_consoleEntries.size(); i++)
+            {
+                auto& entry = m_consoleEntries[m_offset + i];
+                char optionValueText[78] = { 0 };
+                strncpy(optionValueText, entry->optionValue->GetText().c_str(), 78 - 1);
 
-				switch (entry->selectType)
-				{
-				case ConsoleEntrySelectType::HEADING:
-					console->flags |= CONSOLE_COLOR_BOLD;
-					printf("%s\n", optionValueText);
-					console->flags &= ~CONSOLE_COLOR_BOLD;
-					break;
+                switch (entry->selectType)
+                {
+                case ConsoleEntrySelectType::HEADING:
+                    console->flags |= CONSOLE_COLOR_BOLD;
+                    printf("%s\n", optionValueText);
+                    console->flags &= ~CONSOLE_COLOR_BOLD;
+                    break;
 
-				case ConsoleEntrySelectType::SELECT_INACTIVE:
-					console->flags |= CONSOLE_COLOR_FAINT;
-					printf(" %s%s\n", PaddingAfterCursor(), optionValueText);
-					console->flags &= ~CONSOLE_COLOR_FAINT;
-					break;
+                case ConsoleEntrySelectType::SELECT_INACTIVE:
+                    console->flags |= CONSOLE_COLOR_FAINT;
+                    printf(" %s%s\n", PaddingAfterCursor(), optionValueText);
+                    console->flags &= ~CONSOLE_COLOR_FAINT;
+                    break;
 
-				case ConsoleEntrySelectType::SELECT:
-					printf(" %s%s\n", PaddingAfterCursor(), optionValueText);
-					break;
+                case ConsoleEntrySelectType::SELECT:
+                    printf(" %s%s\n", PaddingAfterCursor(), optionValueText);
+                    break;
 
-				default:
-					printf("\n");
-				}
-			}
+                default:
+                    printf("\n");
+                }
+            }
         }
 
         this->DisplayCursor();

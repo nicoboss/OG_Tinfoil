@@ -36,7 +36,7 @@ namespace tin::install
             serviceClose(&contentMetaDatabase.s);
             throw e;
         }
-		
+        
         serviceClose(&contentMetaDatabase.s);
         consoleUpdate(NULL);
     }

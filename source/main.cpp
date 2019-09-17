@@ -110,7 +110,7 @@ int main(int argc, char **argv)
 {
     try
     {
-		setCurrentLanguage(Language::Type::None);
+        setCurrentLanguage(Language::Type::None);
 
         Result rc = 0;
         tin::ui::ViewManager& manager = tin::ui::ViewManager::Instance();
@@ -131,7 +131,7 @@ int main(int argc, char **argv)
         titleManCat.AddMode(std::move(std::make_unique<tin::ui::InstallExtractedNSPMode>()));
         titleManCat.AddMode(std::move(std::make_unique<tin::ui::USBInstallMode>()));
         titleManCat.AddMode(std::move(std::make_unique<tin::ui::NetworkInstallMode>()));
-		titleManCat.AddMode(std::move(std::make_unique<tin::ui::ResetRequiredVersionMode>()));
+        titleManCat.AddMode(std::move(std::make_unique<tin::ui::ResetRequiredVersionMode>()));
         // TODO: Add uninstall and dump nsp
 
         tin::ui::Category tikManCat(translate(Translate::TICKET_MANAGEMENT));
