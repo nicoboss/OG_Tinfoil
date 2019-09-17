@@ -118,10 +118,10 @@ print('enum class Language\n{')
 for lang, keys in t.items():
 	if first:
 		first = False
-		print('\t' + lang.upper() + ' = 0,')
+		print('    ' + lang.upper() + ' = 0,')
 	else:
-		print('\t' + lang.upper() + ',')
-print('\tLAST')
+		print('    ' + lang.upper() + ',')
+print('    LAST')
 print('}\n')
 
 
@@ -134,10 +134,10 @@ with open('../include/translate_defs.h', mode="w", encoding="utf-8") as f:
 	for key, j in keys.items():
 		if first:
 			first = False
-			f.write('\t' + key + ' = 0,\n')
+			f.write('    ' + key + ' = 0,\n')
 		else:
-			f.write('\t' + key + ',\n')
-	f.write('\tLAST\n')
+			f.write('    ' + key + ',\n')
+	f.write('    LAST\n')
 	f.write('};\n')
 
 
@@ -156,12 +156,12 @@ with open('../include/translate_data.h', mode="w", encoding="utf-8") as f:
 	f.write('const char* g_translations[%d][%d] = {\n' % (len(t)+2, len(keys)))
 	for lang,keys in t.items():
 		if i > 0:
-			f.write('\t,\n')
-		f.write('\t{\n')
+			f.write('    ,\n')
+		f.write('    {\n')
 		for key,text in keys.items():
 			if text is not None:
-				f.write('\t\t"%s", // %s\n' % (getBytes(str(text.replace('"', '\\"'))), key))
+				f.write('        "%s", // %s\n' % (getBytes(str(text.replace('"', '\\"'))), key))
 		
-		f.write('\t}\n')
+		f.write('    }\n')
 		i += 1
 	f.write('};\n')
