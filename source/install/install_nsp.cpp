@@ -64,6 +64,10 @@ namespace tin::install::nsp
             ncaName += ".nca";
         else if (m_simpleFileSystem->HasFile(ncaName + ".cnmt.nca"))
             ncaName += ".cnmt.nca";
+		else if (m_simpleFileSystem->HasFile(ncaName + ".ncz"))
+            ncaName += ".ncz";
+        else if (m_simpleFileSystem->HasFile(ncaName + ".cnmt.ncz"))
+            ncaName += ".cnmt.ncz";
         else
         {
             throw std::runtime_error(("Failed to find NCA file " + ncaName + ".nca/.cnmt.nca").c_str());

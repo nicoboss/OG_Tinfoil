@@ -124,8 +124,8 @@ public:
 			aes128XtsContextResetSector(&ctx, sector++, true);
 			aes128XtsEncrypt(&ctx, dst, src, sector_size);
 			
-			dst = (u8*)dst + i;
-			src = (const u8*)src + i;
+			dst = (u8*)dst + sector_size;
+			src = (const u8*)src + sector_size;
 		}
 	}
 	
@@ -136,8 +136,8 @@ public:
 			aes128XtsContextResetSector(&ctx, sector++, true);
 			aes128XtsDecrypt(&ctx, dst, src, sector_size);
 			
-			dst = (u8*)dst + i;
-			src = (const u8*)src + i;
+			dst = (u8*)dst + sector_size;
+			src = (const u8*)src + sector_size;
 		}
 	}
 protected:
