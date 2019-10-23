@@ -10,6 +10,7 @@
 #include "nx/ncm.hpp"
 #include "util/file_util.hpp"
 #include "util/title_util.hpp"
+#include "nx/nca_writer.h"
 #include "debug.h"
 #include "error.hpp"
 
@@ -71,12 +72,12 @@ namespace tin::install::nsp
         LOG_DEBUG("NcaId: %s\n", ncaName.c_str());
         LOG_DEBUG("Dest storage Id: %u\n", m_destStorageId);
 
-        nx::ncm::ContentStorage contentStorage(m_destStorageId);
+        std::shared_ptr<nx::ncm::ContentStorage> contentStorage(new nx::ncm::ContentStorage(m_destStorageId));
 
         // Attempt to delete any leftover placeholders
         try
         {
-            contentStorage.DeletePlaceholder(ncaId);
+            contentStorage->DeletePlaceholder(ncaId);
         }
         catch (...) {}
 
@@ -90,27 +91,37 @@ namespace tin::install::nsp
             throw std::runtime_error(("Failed to allocate read buffer for " + ncaName).c_str());
 
         LOG_DEBUG("Size: 0x%lx\n", ncaSize);
-        contentStorage.CreatePlaceholder(ncaId, ncaId, ncaSize);
+
+		NcaWriter writer(ncaId, contentStorage);
                 
         float progress;
 
         consoleUpdate(NULL);
                 
-        while (fileOff < ncaSize) 
-        {   
-            // Clear the buffer before we read anything, just to be sure    
-            progress = (float)fileOff / (float)ncaSize;
+		try
+		{
+			while (fileOff < ncaSize) 
+			{   
+				// Clear the buffer before we read anything, just to be sure    
+				progress = (float)fileOff / (float)ncaSize;
 
-            if (fileOff % (0x400000 * 3) == 0)
-                printf("> Progress: %lu/%lu MB (%d%s)\r", (fileOff / 1000000), (ncaSize / 1000000), (int)(progress * 100.0), "%");
+				if (fileOff % (0x400000 * 3) == 0)
+					printf("> Progress: %lu/%lu MB (%d%s)\r", (fileOff / 1000000), (ncaSize / 1000000), (int)(progress * 100.0), "%");
 
-            if (fileOff + readSize >= ncaSize) readSize = ncaSize - fileOff;
+				if (fileOff + readSize >= ncaSize) readSize = ncaSize - fileOff;
 
-            ncaFile.Read(fileOff, readBuffer.get(), readSize);
-            contentStorage.WritePlaceholder(ncaId, fileOff, readBuffer.get(), readSize);
-            fileOff += readSize;
-            consoleUpdate(NULL);
-        }
+				ncaFile.Read(fileOff, readBuffer.get(), readSize);
+				writer.write(readBuffer.get(), readSize);
+
+				fileOff += readSize;
+				consoleUpdate(NULL);
+			}
+		}
+		catch (...)
+		{
+		}
+		
+		writer.close();
 
         // Clean up the line for whatever comes next
         printf("                                                           \r");
@@ -118,7 +129,7 @@ namespace tin::install::nsp
         
         try
         {
-            contentStorage.Register(ncaId, ncaId);
+            contentStorage->Register(ncaId, ncaId);
         }
         catch (...)
         {
@@ -127,7 +138,7 @@ namespace tin::install::nsp
 
         try
         {
-            contentStorage.DeletePlaceholder(ncaId);
+            contentStorage->DeletePlaceholder(ncaId);
         }
         catch (...) {}
 

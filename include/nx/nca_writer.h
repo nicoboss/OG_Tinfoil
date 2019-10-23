@@ -2,6 +2,7 @@
 #include <switch.h>
 #include <vector>
 #include "nx/ncm.hpp"
+#include <memory>
 
 #define NCA_HEADER_SIZE 0x4000
 #define MAGIC_NCA3 0x3341434E /* "NCA3" */
@@ -74,12 +75,14 @@ public:
 class NcaBodyWriter
 {
 public:
-	NcaBodyWriter(const NcmNcaId& ncaId, u64 offset, nx::ncm::ContentStorage& contentStorage);
+	NcaBodyWriter(const NcmNcaId& ncaId, u64 offset, std::shared_ptr<nx::ncm::ContentStorage>& contentStorage);
 	virtual ~NcaBodyWriter();
 	virtual u64 write(const  u8* ptr, u64 sz);
+	
+	bool isOpen() const;
 
 protected:
-	nx::ncm::ContentStorage* m_contentStorage;
+	std::shared_ptr<nx::ncm::ContentStorage> m_contentStorage;
 	NcmNcaId m_ncaId;
 
 	u64 m_offset;
@@ -88,15 +91,16 @@ protected:
 class NcaWriter
 {
 public:
-	NcaWriter(const NcmNcaId& ncaId, nx::ncm::ContentStorage& contentStorage);
+	NcaWriter(const NcmNcaId& ncaId, std::shared_ptr<nx::ncm::ContentStorage>& contentStorage);
 	virtual ~NcaWriter();
 
+	bool isOpen() const;
 	bool close();
 	u64 write(const  u8* ptr, u64 sz);
 
 protected:
 	NcmNcaId m_ncaId;
-	nx::ncm::ContentStorage* m_contentStorage;
+	std::shared_ptr<nx::ncm::ContentStorage> m_contentStorage;
 	std::vector<u8> m_buffer;
-	NcaBodyWriter* m_writer;
+	std::shared_ptr<NcaBodyWriter> m_writer;
 };

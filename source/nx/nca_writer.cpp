@@ -20,10 +20,15 @@ public:
 	u8 headerKey[0x20] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 };
 
+Keys* g_keys = NULL;
+
 const Keys& keys()
 {
-	static Keys k;
-	return k;
+	if(!g_keys)
+	{
+		g_keys = new Keys();
+	}
+	return *g_keys;
 }
 
 template<class T>
@@ -141,7 +146,7 @@ protected:
 };
 
 
-NcaBodyWriter::NcaBodyWriter(const NcmNcaId& ncaId, u64 offset, nx::ncm::ContentStorage& contentStorage) : m_contentStorage(&contentStorage), m_ncaId(ncaId), m_offset(offset)
+NcaBodyWriter::NcaBodyWriter(const NcmNcaId& ncaId, u64 offset, std::shared_ptr<nx::ncm::ContentStorage>& contentStorage) : m_contentStorage(contentStorage), m_ncaId(ncaId), m_offset(offset)
 {
 }
 
@@ -151,11 +156,19 @@ NcaBodyWriter::~NcaBodyWriter()
 
 u64 NcaBodyWriter::write(const  u8* ptr, u64 sz)
 {
-	m_contentStorage->WritePlaceholder(m_ncaId, m_offset, (void*)ptr, sz);
+	if(isOpen())
+	{
+		m_contentStorage->WritePlaceholder(m_ncaId, m_offset, (void*)ptr, sz);
+		m_offset += sz;
+		return sz;
+	}
 
-	m_offset += sz;
+	return 0;
+}
 
-	return sz;
+bool NcaBodyWriter::isOpen() const
+{
+	return m_contentStorage != NULL;
 }
 
 
@@ -241,7 +254,7 @@ protected:
 class NczBodyWriter : public NcaBodyWriter
 {
 public:
-	NczBodyWriter(const NcmNcaId& ncaId, u64 offset, nx::ncm::ContentStorage& contentStorage) : NcaBodyWriter(ncaId, offset, contentStorage)
+	NczBodyWriter(const NcmNcaId& ncaId, u64 offset, std::shared_ptr<nx::ncm::ContentStorage>& contentStorage) : NcaBodyWriter(ncaId, offset, contentStorage)
 	{
 		buffIn = malloc(buffInSize);
 		buffOut = malloc(buffOutSize);
@@ -283,6 +296,11 @@ public:
 
 	bool flush()
 	{
+		if(!isOpen())
+		{
+			return false;
+		}
+		
 		if (m_deflateBuffer.size())
 		{
 			m_contentStorage->WritePlaceholder(m_ncaId, m_offset, m_deflateBuffer.data(), m_deflateBuffer.size());
@@ -445,8 +463,7 @@ public:
 	std::vector<NczHeader::SectionContext*> sections;
 };
 
-
-NcaWriter::NcaWriter(const NcmNcaId& ncaId, nx::ncm::ContentStorage& contentStorage) : m_ncaId(ncaId), m_contentStorage(&contentStorage), m_writer(NULL)
+NcaWriter::NcaWriter(const NcmNcaId& ncaId, std::shared_ptr<nx::ncm::ContentStorage>& contentStorage) : m_ncaId(ncaId), m_contentStorage(contentStorage), m_writer(NULL)
 {
 }
 
@@ -459,10 +476,25 @@ bool NcaWriter::close()
 {
 	if (m_writer)
 	{
-		delete m_writer;
 		m_writer = NULL;
 	}
+	else if(m_buffer.size())
+	{
+		if(isOpen())
+		{
+			m_contentStorage->CreatePlaceholder(m_ncaId, m_ncaId, m_buffer.size());
+			m_contentStorage->WritePlaceholder(m_ncaId, 0, m_buffer.data(), m_buffer.size());
+		}
+
+		m_buffer.resize(0);
+	}
+	m_contentStorage = NULL;
 	return true;
+}
+
+bool NcaWriter::isOpen() const
+{
+	return m_contentStorage != NULL;
 }
 
 u64 NcaWriter::write(const  u8* ptr, u64 sz)
@@ -493,14 +525,20 @@ u64 NcaWriter::write(const  u8* ptr, u64 sz)
 
 			if (header.magic == MAGIC_NCA3)
 			{
-				m_contentStorage->CreatePlaceholder(m_ncaId, m_ncaId, header.nca_size);
+				if(isOpen())
+				{
+					m_contentStorage->CreatePlaceholder(m_ncaId, m_ncaId, header.nca_size);
+				}
 			}
 			else
 			{
 				throw "Invalid NCA magic";
 			}
 
-			m_contentStorage->WritePlaceholder(m_ncaId, 0, m_buffer.data(), m_buffer.size());
+			if(isOpen())
+			{
+				m_contentStorage->WritePlaceholder(m_ncaId, 0, m_buffer.data(), m_buffer.size());
+			}
 		}
 	}
 
@@ -512,11 +550,11 @@ u64 NcaWriter::write(const  u8* ptr, u64 sz)
 			{
 				if (*(u64*)ptr == NczHeader::MAGIC)
 				{
-					m_writer = new NczBodyWriter(m_ncaId, m_buffer.size(), *m_contentStorage);
+					m_writer = std::shared_ptr<NcaBodyWriter>(new NczBodyWriter(m_ncaId, m_buffer.size(), m_contentStorage));
 				}
 				else
 				{
-					m_writer = new NcaBodyWriter(m_ncaId, m_buffer.size(), *m_contentStorage);
+					m_writer = std::shared_ptr<NcaBodyWriter>(new NcaBodyWriter(m_ncaId, m_buffer.size(), m_contentStorage));
 				}
 			}
 			else

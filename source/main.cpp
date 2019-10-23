@@ -69,6 +69,12 @@ void userAppInit(void)
 
     if (R_FAILED(usbCommsInitialize()))
         fatalSimple(0xBEEA);
+	
+	if (R_FAILED(splCryptoInitialize()))
+		 fatalSimple(0xBEEB);
+	 
+    if (R_FAILED(splInitialize()))
+		fatalSimple(0xBEEC);
 
     // We initialize this inside ui_networkinstall_mode for normal users.
     #ifdef NXLINK_DEBUG
@@ -79,6 +85,9 @@ void userAppInit(void)
 
 void userAppExit(void)
 {
+	splExit();
+	splCryptoExit();
+	
     nifmExit();
 
     #ifdef NXLINK_DEBUG
