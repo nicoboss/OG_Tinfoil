@@ -46,10 +46,9 @@ T swapEndian(T s)
 
 void append(std::vector<u8>& buffer, const u8* ptr, u64 sz)
 {
-	for (u64 i = 0; i < sz; i++)
-	{
-		buffer.push_back(ptr[i]);
-	}
+	u64 offset = buffer.size();
+	buffer.resize(offset + sz);
+	memcpy(buffer.data() + offset, ptr, sz);
 }
 
 class AesCtr
@@ -494,7 +493,7 @@ bool NcaWriter::close()
 
 bool NcaWriter::isOpen() const
 {
-	return m_contentStorage != NULL;
+	return (bool)m_contentStorage;
 }
 
 u64 NcaWriter::write(const  u8* ptr, u64 sz)
@@ -563,7 +562,14 @@ u64 NcaWriter::write(const  u8* ptr, u64 sz)
 			}
 		}
 
-		m_writer->write(ptr, sz);
+		if(m_writer)
+		{
+			m_writer->write(ptr, sz);
+		}
+		else
+		{
+			throw "null writer";
+		}
 	}
 
 	return sz;

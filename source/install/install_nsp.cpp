@@ -93,6 +93,7 @@ namespace tin::install::nsp
         LOG_DEBUG("Size: 0x%lx\n", ncaSize);
 
 		NcaWriter writer(ncaId, contentStorage);
+		//contentStorage->CreatePlaceholder(ncaId, ncaId, ncaSize);
                 
         float progress;
 
@@ -112,6 +113,7 @@ namespace tin::install::nsp
 
 				ncaFile.Read(fileOff, readBuffer.get(), readSize);
 				writer.write(readBuffer.get(), readSize);
+				//contentStorage->WritePlaceholder(ncaId, fileOff, readBuffer.get(), readSize);
 
 				fileOff += readSize;
 				consoleUpdate(NULL);
