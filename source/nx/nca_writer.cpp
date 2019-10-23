@@ -106,6 +106,7 @@ class AesXtr
 public:
 	AesXtr(const u8* key)
 	{
+		aes128XtsContextCreate(&ctx, key, key + 0x10, false);
 	}
 	
 	virtual ~AesXtr()
@@ -114,17 +115,33 @@ public:
 
 	void encrypt(void *dst, const void *src, size_t l, size_t sector, size_t sector_size)
 	{
+		for (size_t i = 0; i < l; i += sector_size)
+		{
+			aes128XtsContextResetSector(&ctx, sector++, true);
+			aes128XtsEncrypt(&ctx, dst, src, sector_size);
+			
+			dst = (u8*)dst + i;
+			src = (const u8*)src + i;
+		}
 	}
 	
 	void decrypt(void *dst, const void *src, size_t l, size_t sector, size_t sector_size)
 	{
+		for (size_t i = 0; i < l; i += sector_size)
+		{
+			aes128XtsContextResetSector(&ctx, sector++, true);
+			aes128XtsDecrypt(&ctx, dst, src, sector_size);
+			
+			dst = (u8*)dst + i;
+			src = (const u8*)src + i;
+		}
 	}
 protected:
-
+	Aes128XtsContext ctx;
 };
 
 
-NcaBodyWriter::NcaBodyWriter(const NcmNcaId& ncaId, u64 offset, nx::ncm::ContentStorage& contentStorage) : m_ncaId(ncaId), m_contentStorage(&contentStorage), m_offset(offset)
+NcaBodyWriter::NcaBodyWriter(const NcmNcaId& ncaId, u64 offset, nx::ncm::ContentStorage& contentStorage) : m_contentStorage(&contentStorage), m_ncaId(ncaId), m_offset(offset)
 {
 }
 
@@ -277,7 +294,7 @@ public:
 
 	NczHeader::SectionContext& section(u64 offset)
 	{
-		for (int i = 0; i < sections.size(); i++)
+		for (u64 i = 0; i < sections.size(); i++)
 		{
 			if (offset >= sections[i]->offset && offset < sections[i]->offset + sections[i]->size)
 			{
@@ -349,8 +366,6 @@ public:
 
 	u64 write(const  u8* ptr, u64 sz) override
 	{
-		u64 total = 0;
-
 		if (!m_sectionsInitialized)
 		{
 			if (!m_buffer.size())
@@ -452,8 +467,6 @@ bool NcaWriter::close()
 
 u64 NcaWriter::write(const  u8* ptr, u64 sz)
 {
-	u64 total = 0;
-
 	if (m_buffer.size() < NCA_HEADER_SIZE)
 	{
 		if (m_buffer.size() + sz > NCA_HEADER_SIZE)
@@ -484,7 +497,7 @@ u64 NcaWriter::write(const  u8* ptr, u64 sz)
 			}
 			else
 			{
-				// todo fatal
+				throw "Invalid NCA magic";
 			}
 
 			m_contentStorage->WritePlaceholder(m_ncaId, 0, m_buffer.data(), m_buffer.size());
@@ -508,7 +521,7 @@ u64 NcaWriter::write(const  u8* ptr, u64 sz)
 			}
 			else
 			{
-				// raise fatal
+				throw "not enough data to read ncz header";
 			}
 		}
 

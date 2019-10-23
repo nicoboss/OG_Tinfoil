@@ -16,7 +16,7 @@ public:
 	u8 crypt_type;
 	u8 _0x5[0x3];
 	u8 superblock_data[0x138];
-	/*union { /* FS-specific superblock. Size = 0x138. *//*
+	/*union {
 		pfs0_superblock_t pfs0_superblock;
 		romfs_superblock_t romfs_superblock;
 		//nca0_romfs_superblock_t nca0_romfs_superblock;
