@@ -1,15 +1,42 @@
 #include "nx/nca_writer.h"
 #include <zstd.h>
+#include <string.h>
 
-struct Key256
+class Keys
 {
-	u8 data[0x20] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 0x00, 0x00, 0x00, 0x00 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 0x00 0x00, 0x00 0x00, 0x00};
-} PACKED;
+public:
+	Keys()
+	{
+		u8 kek[0x10] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
-const Key256& headerKey()
+		splCryptoGenerateAesKek(headerKekSource, 0, 0, kek);
+		splCryptoGenerateAesKey(kek, headerKeySource, headerKey);
+		splCryptoGenerateAesKey(kek, headerKeySource + 0x10, headerKey + 0x10);
+	}
+
+	u8 headerKekSource[0x10] = { 0x1F, 0x12, 0x91, 0x3A, 0x4A, 0xCB, 0xF0, 0x0D, 0x4C, 0xDE, 0x3A, 0xF6, 0xD5, 0x23, 0x88, 0x2A };
+	u8 headerKeySource[0x20] = { 0x5A, 0x3E, 0xD8, 0x4F, 0xDE, 0xC0, 0xD8, 0x26, 0x31, 0xF7, 0xE2, 0x5D, 0x19, 0x7B, 0xF5, 0xD0, 0x1C, 0x9B, 0x7B, 0xFA, 0xF6, 0x28, 0x18, 0x3D, 0x71, 0xF6, 0x4D, 0x73, 0xF1, 0x50, 0xB9, 0xD2 };
+
+	u8 headerKey[0x20] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+};
+
+const Keys& keys()
 {
-	static Key256 key;
-	return key;
+	static Keys k;
+	return k;
+}
+
+template<class T>
+T swapEndian(T s)
+{
+	T result;
+	u8* dest = (u8*)&result;
+	u8* src = (u8*)&s;
+	for (unsigned int i = 0; i < sizeof(s); i++)
+	{
+		dest[i] = src[sizeof(s) - i - 1];
+	}
+	return result;
 }
 
 void append(std::vector<u8>& buffer, const u8* ptr, u64 sz)
@@ -20,8 +47,84 @@ void append(std::vector<u8>& buffer, const u8* ptr, u64 sz)
 	}
 }
 
+class AesCtr
+{
+public:
+	AesCtr() : m_high(0), m_low(0)
+	{
+	}
 
-NcaBodyWriter::NcaBodyWriter(const NcaId& ncaId, u64 offset, ContentStorage& contentStorage) : m_ncaId(ncaId), m_contentStorage(&contentStorage), m_offset(offset)
+	AesCtr(u64 iv) : m_high(swapEndian(iv)), m_low(0)
+	{
+	}
+
+	u64& high() { return m_high; }
+	u64& low() { return m_low; }
+private:
+	u64 m_high;
+	u64 m_low;
+};
+
+
+class Aes128Ctr
+{
+public:
+	Aes128Ctr(const u8* key, const AesCtr& iv)
+	{
+		counter = iv;
+		aes128CtrContextCreate(&ctx, key, &iv);
+		seek(0);
+	}
+	
+	virtual ~Aes128Ctr()
+	{
+	}
+	
+	void seek(u64 offset)
+	{
+		counter.low() = swapEndian(offset >> 4);
+		aes128CtrContextResetCtr(&ctx, &counter);
+	}
+	
+	void encrypt(void *dst, const void *src, size_t l)
+	{
+		aes128CtrCrypt(&ctx, dst, src, l);
+	}
+	
+	void decrypt(void *dst, const void *src, size_t l)
+	{
+		encrypt(dst, src, l);
+	}
+protected:
+	AesCtr counter;
+
+	Aes128CtrContext ctx;
+};
+
+class AesXtr
+{
+public:
+	AesXtr(const u8* key)
+	{
+	}
+	
+	virtual ~AesXtr()
+	{
+	}
+
+	void encrypt(void *dst, const void *src, size_t l, size_t sector, size_t sector_size)
+	{
+	}
+	
+	void decrypt(void *dst, const void *src, size_t l, size_t sector, size_t sector_size)
+	{
+	}
+protected:
+
+};
+
+
+NcaBodyWriter::NcaBodyWriter(const NcmNcaId& ncaId, u64 offset, nx::ncm::ContentStorage& contentStorage) : m_ncaId(ncaId), m_contentStorage(&contentStorage), m_offset(offset)
 {
 }
 
@@ -31,7 +134,7 @@ NcaBodyWriter::~NcaBodyWriter()
 
 u64 NcaBodyWriter::write(const  u8* ptr, u64 sz)
 {
-	m_contentStorage->writePlaceholder(m_ncaId, m_offset, (void*)ptr, sz);
+	m_contentStorage->WritePlaceholder(m_ncaId, m_offset, (void*)ptr, sz);
 
 	m_offset += sz;
 
@@ -52,8 +155,8 @@ public:
 		u8 cryptoType;
 		u8 padding1[7];
 		u64 padding2;
-		integer<128> cryptoKey;
-		integer<128> cryptoCounter;
+		u8 cryptoKey[0x10];
+		u8 cryptoCounter[0x10];
 	} PACKED;
 
 	class SectionContext : public Section
@@ -121,7 +224,7 @@ protected:
 class NczBodyWriter : public NcaBodyWriter
 {
 public:
-	NczBodyWriter(const NcaId& ncaId, u64 offset, ContentStorage& contentStorage) : NcaBodyWriter(ncaId, offset, contentStorage)
+	NczBodyWriter(const NcmNcaId& ncaId, u64 offset, nx::ncm::ContentStorage& contentStorage) : NcaBodyWriter(ncaId, offset, contentStorage)
 	{
 		buffIn = malloc(buffInSize);
 		buffOut = malloc(buffOutSize);
@@ -165,7 +268,7 @@ public:
 	{
 		if (m_deflateBuffer.size())
 		{
-			m_contentStorage->writePlaceholder(m_ncaId, m_offset, m_deflateBuffer.data(), m_deflateBuffer.size());
+			m_contentStorage->WritePlaceholder(m_ncaId, m_offset, m_deflateBuffer.data(), m_deflateBuffer.size());
 			m_offset += m_deflateBuffer.size();
 			m_deflateBuffer.resize(0);
 		}
@@ -220,7 +323,7 @@ public:
 
 			if (ZSTD_isError(ret))
 			{
-				error(ZSTD_getErrorName(ret));
+				printf("%s\n", ZSTD_getErrorName(ret));
 				return false;
 			}
 
@@ -328,7 +431,7 @@ public:
 };
 
 
-NcaWriter::NcaWriter(const NcaId& ncaId, ContentStorage& contentStorage) : m_ncaId(ncaId), m_contentStorage(&contentStorage), m_writer(NULL)
+NcaWriter::NcaWriter(const NcmNcaId& ncaId, nx::ncm::ContentStorage& contentStorage) : m_ncaId(ncaId), m_contentStorage(&contentStorage), m_writer(NULL)
 {
 }
 
@@ -372,19 +475,19 @@ u64 NcaWriter::write(const  u8* ptr, u64 sz)
 		{
 			NcaHeader header;
 			memcpy(&header, m_buffer.data(), sizeof(header));
-			Crypto crypto(&headerKey(), sizeof(headerKey()), MBEDTLS_CIPHER_AES_128_XTS);
-			crypto.xtsDecrypt(&header, &header, sizeof(header), 0, 0x200);
+			AesXtr crypto(keys().headerKey);
+			crypto.decrypt(&header, &header, sizeof(header), 0, 0x200);
 
 			if (header.magic == MAGIC_NCA3)
 			{
-				m_contentStorage->createPlaceholder(m_ncaId, m_ncaId, header.nca_size);
+				m_contentStorage->CreatePlaceholder(m_ncaId, m_ncaId, header.nca_size);
 			}
 			else
 			{
 				// todo fatal
 			}
 
-			m_contentStorage->writePlaceholder(m_ncaId, 0, m_buffer.data(), m_buffer.size());
+			m_contentStorage->WritePlaceholder(m_ncaId, 0, m_buffer.data(), m_buffer.size());
 		}
 	}
 

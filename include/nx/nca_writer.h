@@ -1,7 +1,6 @@
 #pragma once
 #include <switch.h>
 #include <vector>
-#include "nx/ipc/ncm_ext.h"
 #include "nx/ncm.hpp"
 
 #define NCA_HEADER_SIZE 0x4000
@@ -14,7 +13,7 @@ public:
 	u8 _0x1;
 	u8 partition_type;
 	u8 fs_type;
-	crypt_type_t crypt_type;
+	u8 crypt_type;
 	u8 _0x5[0x3];
 	u8 superblock_data[0x138];
 	/*union { /* FS-specific superblock. Size = 0x138. *//*
@@ -66,8 +65,8 @@ public:
 	u8 _0x221[0xF]; /* Padding. */
 	u64 m_rightsId[2]; /* Rights ID (for titlekey crypto). */
 	NcaSectionEntry section_entries[4]; /* Section entry metadata. */
-	integer<256> section_hashes[4]; /* SHA-256 hashes for each section header. */
-	integer<128> m_keys[4]; /* Encrypted key area. */
+	u8 section_hashes[4 * 0x20]; /* SHA-256 hashes for each section header. */
+	u8 m_keys[4 * 0x10]; /* Encrypted key area. */
 	u8 _0x340[0xC0]; /* Padding. */
 	NcaFsHeader fs_headers[4]; /* FS section headers. */
 } PACKED;
@@ -75,13 +74,13 @@ public:
 class NcaBodyWriter
 {
 public:
-	NcaBodyWriter(const NcaId& ncaId, u64 offset, ContentStorage& contentStorage);
+	NcaBodyWriter(const NcmNcaId& ncaId, u64 offset, nx::ncm::ContentStorage& contentStorage);
 	virtual ~NcaBodyWriter();
 	virtual u64 write(const  u8* ptr, u64 sz);
 
 protected:
-	ContentStorage* m_contentStorage;
-	NcaId m_ncaId;
+	nx::ncm::ContentStorage* m_contentStorage;
+	NcmNcaId m_ncaId;
 
 	u64 m_offset;
 };
@@ -89,15 +88,15 @@ protected:
 class NcaWriter
 {
 public:
-	NcaWriter(const NcaId& ncaId, ContentStorage& contentStorage);
+	NcaWriter(const NcmNcaId& ncaId, nx::ncm::ContentStorage& contentStorage);
 	virtual ~NcaWriter();
 
 	bool close();
 	u64 write(const  u8* ptr, u64 sz);
 
 protected:
-	NcaId m_ncaId;
-	ContentStorage* m_contentStorage;
+	NcmNcaId m_ncaId;
+	nx::ncm::ContentStorage* m_contentStorage;
 	std::vector<u8> m_buffer;
 	NcaBodyWriter* m_writer;
 };
