@@ -181,10 +181,11 @@ namespace tin::ui
                     std::stringstream urlStream(urlBuf.get());
                     std::string segment;
                     std::string nspExt = ".nsp";
+					std::string nszExt = ".nsz";
 
                     while (std::getline(urlStream, segment, '\n'))
                     {
-                        if (segment.compare(segment.size() - nspExt.size(), nspExt.size(), nspExt) == 0)
+                        if (segment.compare(segment.size() - nspExt.size(), nspExt.size(), nspExt) == 0 || segment.compare(segment.size() - nszExt.size(), nszExt.size(), nszExt) == 0)
                             urls.push_back(segment);
                     }
 
