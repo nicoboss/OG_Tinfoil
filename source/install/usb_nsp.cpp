@@ -97,7 +97,7 @@ namespace tin::install::nsp
 
         thrd_create(&usbThread, USBThreadFunc, &args);
         thrd_create(&writeThread, USBPlaceholderWriteFunc, &args);
-        
+
         u64 freq = armGetSystemTickFreq();
         u64 startTime = armGetSystemTick();
         size_t startSizeBuffered = 0;

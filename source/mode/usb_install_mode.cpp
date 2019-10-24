@@ -57,7 +57,7 @@ namespace tin::ui
         while (true)
         {
             hidScanInput();
-            
+
             if (hidKeysDown(CONTROLLER_P1_AUTO) & KEY_B)
                 break;
 
@@ -93,7 +93,7 @@ namespace tin::ui
         std::stringstream nspNameStream(nspListBuf.get());
         std::string segment;
         std::string nspExt = ".nsp";
-		std::string nszExt = ".nsz";
+        std::string nszExt = ".nsz";
 
         while (std::getline(nspNameStream, segment, '\n'))
         {
@@ -104,7 +104,7 @@ namespace tin::ui
         auto selectView = std::make_unique<tin::ui::ConsoleCheckboxView>(std::bind(&USBInstallMode::OnNSPSelected, this), DEFAULT_TITLE, 2);
         selectView->AddEntry(translate(Translate::NSP_SELECT), tin::ui::ConsoleEntrySelectType::HEADING, nullptr);
         selectView->AddEntry("", tin::ui::ConsoleEntrySelectType::NONE, nullptr);
-        
+
         for (auto& nspName : nspNames)
         {
             LOG_DEBUG("NSP Name: %s\n", nspName.c_str());
@@ -159,7 +159,7 @@ namespace tin::ui
 
         auto view = std::make_unique<tin::ui::ConsoleView>(4);
         manager.PushView(std::move(view));
-                    
+
         for (auto& nspName : m_nspNames)
         {
             tin::install::nsp::USBNSP usbNSP(nspName);

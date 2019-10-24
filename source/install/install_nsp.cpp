@@ -30,7 +30,7 @@ namespace tin::install::nsp
         std::string cnmtNCAFullPath = contentStorage.GetPath(cnmtRecord.content_id);
         return { tin::util::GetContentMetaFromNCA(cnmtNCAFullPath), cnmtRecord };
     }
-    
+
     void NSPInstallTask::InstallTicketCert()
     {
         // Read the tik file and put it into a buffer
@@ -64,7 +64,7 @@ namespace tin::install::nsp
             ncaName += ".nca";
         else if (m_simpleFileSystem->HasFile(ncaName + ".cnmt.nca"))
             ncaName += ".cnmt.nca";
-		else if (m_simpleFileSystem->HasFile(ncaName + ".ncz"))
+          else if (m_simpleFileSystem->HasFile(ncaName + ".ncz"))
             ncaName += ".ncz";
         else if (m_simpleFileSystem->HasFile(ncaName + ".cnmt.ncz"))
             ncaName += ".cnmt.ncz";
@@ -96,41 +96,41 @@ namespace tin::install::nsp
 
         LOG_DEBUG("Size: 0x%lx\n", ncaSize);
 
-		NcaWriter writer(ncaId, contentStorage);
-                
+          NcaWriter writer(ncaId, contentStorage);
+
         float progress;
 
         consoleUpdate(NULL);
-                
-		try
-		{
-			while (fileOff < ncaSize) 
-			{   
-				// Clear the buffer before we read anything, just to be sure    
-				progress = (float)fileOff / (float)ncaSize;
 
-				if (fileOff % (0x400000 * 3) == 0)
-					printf("> Progress: %lu/%lu MB (%d%s)\r", (fileOff / 1000000), (ncaSize / 1000000), (int)(progress * 100.0), "%");
+          try
+          {
+               while (fileOff < ncaSize) 
+               {   
+                    // Clear the buffer before we read anything, just to be sure    
+                    progress = (float)fileOff / (float)ncaSize;
 
-				if (fileOff + readSize >= ncaSize) readSize = ncaSize - fileOff;
+                    if (fileOff % (0x400000 * 3) == 0)
+                         printf("> Progress: %lu/%lu MB (%d%s)\r", (fileOff / 1000000), (ncaSize / 1000000), (int)(progress * 100.0), "%");
 
-				ncaFile.Read(fileOff, readBuffer.get(), readSize);
-				writer.write(readBuffer.get(), readSize);
+                    if (fileOff + readSize >= ncaSize) readSize = ncaSize - fileOff;
 
-				fileOff += readSize;
-				consoleUpdate(NULL);
-			}
-		}
-		catch (...)
-		{
-		}
-		
-		writer.close();
+                    ncaFile.Read(fileOff, readBuffer.get(), readSize);
+                    writer.write(readBuffer.get(), readSize);
+
+                    fileOff += readSize;
+                    consoleUpdate(NULL);
+               }
+          }
+          catch (...)
+          {
+          }
+
+          writer.close();
 
         // Clean up the line for whatever comes next
         printf("                                                           \r");
         printf("Registering placeholder...\n");
-        
+
         try
         {
             contentStorage->Register(ncaId, ncaId);

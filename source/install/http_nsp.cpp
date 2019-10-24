@@ -75,7 +75,7 @@ namespace tin::install::nsp
 
         thrd_create(&curlThread, CurlStreamFunc, &args);
         thrd_create(&writeThread, PlaceholderWriteFunc, &args);
-        
+
         u64 freq = armGetSystemTickFreq();
         u64 startTime = armGetSystemTick();
         size_t startSizeBuffered = 0;

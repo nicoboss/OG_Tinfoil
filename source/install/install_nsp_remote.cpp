@@ -68,7 +68,7 @@ namespace tin::install::nsp
         // Clean up the line for whatever comes next
         printf("                                                           \r");
         printf("Registering placeholder...\n");
-        
+
         try
         {
             contentStorage->Register(ncaId, ncaId);
